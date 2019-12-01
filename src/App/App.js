@@ -3,9 +3,10 @@ import Router from 'react-regex-router';
 import { inject, observer } from 'mobx-react';
 import styled from '@emotion/styled';
 
-import Controller from './App.controller';
-import Login from 'Login/Login';
+import Controller from 'App/App.controller';
 import Appbar from 'App/components/Appbar';
+import Search from 'Search/Search';
+import Login from 'Login/Login';
 
 const AppContainer = styled.div`
   width: 100vw;
@@ -26,6 +27,9 @@ const App = ({currRoute}) => {
           {
             name: /^Login$/i,
             component: Login
+          },{
+            name: /^Search$/i,
+            component: Search
           }
         ]}
       />

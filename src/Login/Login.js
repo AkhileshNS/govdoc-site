@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import Card from 'react-bootstrap/Card';
 import firebase from 'global/firebase';
 import { StyledFirebaseAuth } from 'react-firebaseui';
 
@@ -10,27 +9,33 @@ const LoginContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  .firebaseui-container {
+    box-shadow: none;
+  }
+  .mdl-textfield__input.firebaseui-input.firebaseui-id-email {
+    border-color: var(--primary);
+  }
+  .firebaseui-id-submit.firebaseui-button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored {
+    background: var(--primary);
+    box-shadow: none;
+  }
+  .firebaseui-id-secondary-link.firebaseui-button.mdl-button.mdl-js-button.mdl-button--primary {
+    color: var(--primary);
+  }
 `;
 
 const Login = () => {
   return (
     <LoginContainer>
-      <Card>
-        <Card.Body>
-          <Card.Title>Login/SignUp</Card.Title>
-          <Card.Text>
-            Please login/signup with your email to get started
-          </Card.Text>
-          <StyledFirebaseAuth
-            firebaseAuth={firebase.auth()}
-            uiConfig={{
-              signInFlow: 'redirect',
-              signInSuccessUrl: '/',
-              signInOptions: [firebase.auth.EmailAuthProvider.PROVIDER_ID]
-            }}
-          />
-        </Card.Body>
-      </Card>
+      <StyledFirebaseAuth
+        firebaseAuth={firebase.auth()}
+        uiConfig={{
+          signInFlow: 'redirect',
+          signInSuccessUrl: '/',
+          signInOptions: [firebase.auth.EmailAuthProvider.PROVIDER_ID]
+        }}
+      />
     </LoginContainer>
   );
 };

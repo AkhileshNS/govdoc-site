@@ -2,10 +2,10 @@ import React from 'react';
 import Router from 'react-regex-router';
 import { inject, observer } from 'mobx-react';
 import styled from '@emotion/styled';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
 
+import Controller from './App.controller';
 import Login from 'Login/Login';
+import Appbar from 'App/components/Appbar';
 
 const AppContainer = styled.div`
   width: 100vw;
@@ -15,19 +15,11 @@ const AppContainer = styled.div`
   flex-direction: column;
 `;
 
-const App = ({ currRoute }) => {
+const App = ({currRoute}) => {
   return (
     <AppContainer>
-      <Navbar bg='primary' variant='dark' expand='lg'>
-        <Navbar.Brand>Document Approval</Navbar.Brand>
-        <Navbar.Toggle aria-controls='basic-navbar-nav' />
-        <Navbar.Collapse id='basic-navbar-nav'>
-          <Nav className='mr-auto'>
-            <Nav.Link>Home</Nav.Link>
-            <Nav.Link>Link</Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+      <Controller />
+      <Appbar />
       <Router
         currRoute={currRoute}
         routes={[

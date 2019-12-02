@@ -2,7 +2,7 @@ import { decorate, observable, action } from "mobx";
 import clone from 'lodash/cloneDeep';
 
 class appStore {
-  currRoute = "list";
+  currRoute = "submit";
   user = null;
 
   // User

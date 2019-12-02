@@ -8,6 +8,7 @@ import Appbar from 'App/components/Appbar';
 import Search from 'Search/Search';
 import Login from 'Login/Login';
 import List from 'List/List';
+import Submit from 'Submit/Submit';
 
 const AppContainer = styled.div`
   width: 100vw;
@@ -34,6 +35,9 @@ const App = ({currRoute}) => {
           },{
             name: /^List$/i,
             component: List
+          },{
+            name: /^Submit$/i,
+            component: Submit
           }
         ]}
       />

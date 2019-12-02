@@ -2,7 +2,7 @@ import { decorate, observable, action } from "mobx";
 import clone from 'lodash/cloneDeep';
 
 class appStore {
-  currRoute = "dashboard";
+  currRoute = "chain";
   user = null;
 
   // User
@@ -19,6 +19,19 @@ class appStore {
     email: "nsakhilesh02@gmail.com",
     mobile: "9611129344",
     url: "https://firebasestorage.googleapis.com/v0/b/shoppinglistplusplus-nsa.appspot.com/o/govdoc%2FLab%20record%20(4).pdf?alt=media&token=7d32e991-dbe8-4dd0-9e2b-61ee659dae99"
+  }];
+  chain = [{
+    id: 1,
+    timestamp: Date.now(),
+    user: {
+      name: "Akhilesh",
+      email: "nsakhilesh02@gmail.com",
+      mobile: "9611129344"
+    },
+    approver: {
+      name: "Aniruddha MN",
+      email: "aniruddha.murthy1@gmail.com"
+    }
   }];
 
   setRoute = route => this.currRoute = route;
@@ -37,7 +50,9 @@ class appStore {
   
   // Common
   addPending = document => this.pending.push(clone(document));
+  changePending = (document, i) => this.pending[i] = clone(document);
   removePending = i => this.pending.splice(i, 1);
+  addToChain = document => this.chain.push(clone(document));
 }
 
 decorate(appStore, {
@@ -45,11 +60,17 @@ decorate(appStore, {
   user: observable,
   search: observable,
   approver: observable,
+  pending: observable,
+  chain: observable,
 
   setRoute: action,
   setUser: action,
   setSearch: action,
-  setApprover: action
+  setApprover: action,
+  addPending: action,
+  changePending: action,
+  removePending: action,
+  addToChain: action
 });
 
 export default new appStore();

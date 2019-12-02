@@ -11,6 +11,7 @@ import List from 'List/List';
 import Submit from 'Submit/Submit';
 import Pending from 'Pending/Pending';
 import Dashboard from 'Dashboard/Dashboard';
+import Chain from 'Chain/Chain';
 
 const AppContainer = styled.div`
   width: 100vw;
@@ -48,6 +49,10 @@ const App = ({currRoute}) => {
           {
             name: /^Dashboard$/i,
             component: Dashboard
+          },
+          {
+            name: /^Chain$/i,
+            component: Chain
           }
         ]}
       />

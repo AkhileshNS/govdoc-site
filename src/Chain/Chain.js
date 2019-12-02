@@ -24,7 +24,7 @@ const ChainContent = styled.div`
 `;
 
 const cardStyles = {
-  maxHeight: "280px",
+  maxHeight: "300px",
   margin: '0 16px'
 };
 
@@ -33,7 +33,7 @@ const Chain = ({ chain }) => {
     <ChainContainer>
       <h3 className='title'>Blockchain</h3>
       <ChainContent>
-        {chain.map(({ id, timestamp, user, approver }) => (
+        {chain.map(({ id, timestamp, user, approver, url }) => (
           <Card style={cardStyles} body>
             <Card.Title>{id}</Card.Title>
             <Card.Text>{timestamp}</Card.Text>
@@ -42,6 +42,7 @@ const Chain = ({ chain }) => {
             Email: {user.email}<br />
             Name: {user.name}<br />
             Mobile: {user.mobile}</Card.Text>
+            <a href={url} target="_blank" rel="noopener noreferrer">Link to Document</a><br />
             <Badge variant='success'>Approved</Badge>
           </Card>
         ))}

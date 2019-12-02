@@ -31,7 +31,8 @@ class appStore {
     approver: {
       name: "Aniruddha MN",
       email: "aniruddha.murthy1@gmail.com"
-    }
+    },
+    url: "https://firebasestorage.googleapis.com/v0/b/shoppinglistplusplus-nsa.appspot.com/o/govdoc%2FLab%20record%20(4).pdf?alt=media&token=7d32e991-dbe8-4dd0-9e2b-61ee659dae99"
   }];
 
   setRoute = route => this.currRoute = route;

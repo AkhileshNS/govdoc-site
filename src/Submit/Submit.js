@@ -5,6 +5,9 @@ import Dropzone from 'react-dropzone';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
+import uuid from 'uuid/v4';
+import firebase from 'global/firebase';
 
 const SubmitContainer = styled.div`
   width: 100%;
@@ -35,17 +38,61 @@ const DropContainer = styled.div`
   }
 `;
 
-const Submit = ({ setRoute }) => {
+const Submit = ({ user, approver, setRoute }) => {
   const [form, setForm] = React.useState({
     name: '',
     email: '',
     mobile: '',
     document: null
   });
+  const [percent, setPercent] = React.useState('');
 
   const onClick = () => {
-    // Insert Firebase Command Here
-    setRoute("pending");
+    const UUID = uuid();
+    const task = firebase
+      .storage()
+      .ref()
+      .child('govdoc/' + UUID + '.pdf')
+      .put(form.document, { contentType: form.document.type });
+
+    task.on(
+      'state_changed',
+      snap => {
+        let progress = (snap.bytesTransferred / snap.totalBytes) * 100;
+        if (progress < 100) {
+          setPercent(
+            'Uploading... ' + Math.round(progress * 100) / 100 + '% done'
+          );
+        } else {
+          setPercent('Uploaded');
+        }
+      },
+      err => console.log(err),
+      () => {
+        task.snapshot.ref
+          .getDownloadURL()
+          .then(url => {
+            firebase
+              .database()
+              .ref('govdoc/pending')
+              .push()
+              .set({
+                name: user.name,
+                email: user.email,
+                mobile: user.mobile,
+                approver: {
+                  name: approver.name,
+                  email: approver.email
+                },
+                status: 'Pending Approval',
+                url
+              });
+
+            setRoute('pending');
+          })
+          .catch(err => console.log(err));
+      }
+    );
   };
 
   return (
@@ -118,7 +165,16 @@ const Submit = ({ setRoute }) => {
             }
             variant='primary'
             onClick={onClick}>
-            Submit
+            {percent.toLowerCase().includes('uploading') ? (
+              <Spinner
+                as='span'
+                animation='grow'
+                size='sm'
+                role='status'
+                aria-hidden='true'
+              />
+            ) : null}
+            {percent.toLowerCase().includes('uploading') ? percent : 'Submit'}
           </Button>
         </CenterContainer>
       </Card>
@@ -126,6 +182,8 @@ const Submit = ({ setRoute }) => {
   );
 };
 
-export default inject(({ appStore }) => ({ setRoute: appStore.setRoute }))(
-  observer(Submit)
-);
+export default inject(({ appStore }) => ({
+  user: appStore.user,
+  approver: appStore.approver,
+  setRoute: appStore.setRoute
+}))(observer(Submit));

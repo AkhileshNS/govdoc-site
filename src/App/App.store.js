@@ -15,9 +15,14 @@ class appStore {
 
   // Common
   pending = [{
-    name: "Akhilesh NS",
-    email: "nsakhilesh02@gmail.com",
+    name: "Akhilesh Sastry",
+    email: "nsakhilesh@hotmail.com",
     mobile: "9611129344",
+    approver: {
+      name: "Akhilesh NS",
+      email: "nsakhilesh02@gmail.com"
+    },
+    status: "Pending Approval",
     url: "https://firebasestorage.googleapis.com/v0/b/shoppinglistplusplus-nsa.appspot.com/o/govdoc%2FLab%20record%20(4).pdf?alt=media&token=7d32e991-dbe8-4dd0-9e2b-61ee659dae99"
   }];
   chain = [{
@@ -51,8 +56,28 @@ class appStore {
   
   // Common
   addPending = document => this.pending.push(clone(document));
-  changePending = (document, i) => this.pending[i] = clone(document);
-  removePending = i => this.pending.splice(i, 1);
+  changePending = document => {
+    let index = -1;
+    for (let i in this.pending) {
+      if (this.pending[i].key===document.key) {
+        index = i;
+      }
+    }
+    if (index!==-1) {
+      this.pending[index] = clone(document);
+    }
+  };
+  removePending = key => {
+    let index = -1;
+    for (let i in this.pending) {
+      if (this.pending[i].key===key) {
+        index = i;
+      }
+    }
+    if (index!==-1) {
+      this.pending.splice(index, 1);
+    }
+  };
   addToChain = document => this.chain.push(clone(document));
 }
 

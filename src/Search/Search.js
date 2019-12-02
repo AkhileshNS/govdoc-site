@@ -58,11 +58,8 @@ const Search = ({ search, setSearch, setRoute }) => {
                 disabled={search.city===""}>
                 <option hidden>-</option>
                 {[
-                  'Indiranagar',
-                  'Jayanagar',
-                  'Banashankari',
                   'Vijaynagar',
-                  'Atiguppe'
+                  'Indiranagar'
                 ].map(val => (
                   <option key={val}>{val}</option>
                 ))}

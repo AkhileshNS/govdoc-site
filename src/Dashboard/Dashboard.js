@@ -47,7 +47,7 @@ const iframeStyles = {
   height: '100%'
 };
 
-const Dashboard = ({ chain, pending }) => {
+const Dashboard = ({ chain, pending, user }) => {
   const [selected, setSelected] = React.useState(-1);
 
   const onClick = () => {
@@ -80,7 +80,9 @@ const Dashboard = ({ chain, pending }) => {
     <DashboardContainer>
       <List>
         <ListGroup>
-          {pending.map(({ name }, i) => (
+          {pending
+          .filter(({approver}) => approver.email===user.email)
+          .map(({ name }, i) => (
             <ListGroup.Item
               style={{ borderRadius: '0' }}
               action
@@ -123,6 +125,7 @@ const Dashboard = ({ chain, pending }) => {
 };
 
 export default inject(({ appStore }) => ({
+  user: appStore.user,
   pending: appStore.pending,
   chain: appStore.chain
 }))(observer(Dashboard));

@@ -15,12 +15,14 @@ const Controller = ({ setRoute, setUser, addPending, changePending, removePendin
           .once('value')
           .then(snap => {
             if (snap.exists()) {
-              let type = snap.val().type;
+              let values = [];
+              for (let key in snap.val()) {values.push(snap.val()[key]);}
+              let type = values[0].type;
               setUser({
-                name: snap.val().name,
-                email: snap.val().email,
-                url: snap.val().url,
-                mobile: 'mobile' in snap.val() ? snap.val().mobile : null,
+                name: values[0].name,
+                email: values[0].email,
+                url: values[0].url,
+                mobile: 'mobile' in values[0] ? values[0].mobile : null,
                 type
               });
 

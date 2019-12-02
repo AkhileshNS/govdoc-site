@@ -24,20 +24,20 @@ const PendingContent = styled.div`
 `;
 
 const cardStyles = {
-  maxHeight: "150px",
-  margin: "0 16px"
-}
+  maxHeight: '150px',
+  margin: '0 16px'
+};
 
 const Pending = ({ pending }) => {
   return (
     <PendingContainer>
       <h3 className='title'>Pending Approvals</h3>
       <PendingContent>
-        {pending.map(({ approver, status }) => (
-          <Card style={cardStyles} body>
+        {pending.map(({ approver, status }, i) => (
+          <Card key={i} style={cardStyles} body>
             <Card.Title>{approver.name}</Card.Title>
             <Card.Text>Email: {approver.email}</Card.Text>
-            <Badge variant="warning">{status}</Badge>
+            <Badge variant={status.toLowerCase()==="approved" ? "success" : "warning"}>{status}</Badge>
           </Card>
         ))}
       </PendingContent>

@@ -2,10 +2,12 @@ import React from 'react';
 import {observer, inject} from 'mobx-react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import clone from 'lodash/cloneDeep';
 
 const Appbar = ({user, setRoute}) => {
   let Menu = null;
   let onClick = () => {};
+  console.log(clone(user));
 
   if (user && "type" in user && user.type==="user") {
     onClick = () => setRoute("Search");

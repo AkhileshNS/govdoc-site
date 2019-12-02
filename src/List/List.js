@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import firebase from 'global/firebase';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
 
 const ListContainer = styled.div`
   width: 100%;
@@ -21,17 +22,19 @@ const ProfilePhoto = styled.img`
 `;
 
 const cardStyles = {
-  maxWidth: "225px",
-  margin: "0px 16px"
-}
+  maxWidth: '225px',
+  margin: '0px 16px'
+};
 
 const cardBodyStyles = {
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center"
-}
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center'
+};
 
-const List = ({ search, approvers, addApprover }) => {
+const List = ({ search, setApprover, setRoute }) => {
+  const [approvers, setApprovers] = React.useState([]);
+
   React.useEffect(() => {
     firebase
       .database()
@@ -41,33 +44,45 @@ const List = ({ search, approvers, addApprover }) => {
       .once('value')
       .then(snap => {
         if (snap.exists()) {
+          let _approvers = [];
           let approversObj = snap.val();
           for (let key in approversObj) {
-            addApprover(approversObj[key]);
+            _approvers.push(approversObj[key]);
           }
+          setApprovers(_approvers);
         }
       });
   }, []);
 
+  const onClick = i => {
+    setApprover(approvers[i]);
+    setRoute('Submit');
+  };
+
   return (
     <ListContainer>
-      {approvers.map(({ name, email, url }) => (
-        <Card style={cardStyles} key={email}>
-          <Card.Body style={cardBodyStyles}>
-            <ProfilePhoto src={url} alt={email} />
-            <Card.Title>{name}</Card.Title>
-            <Card.Text>{email}</Card.Text>
-            <Button variant='primary'>Select</Button>
-          </Card.Body>
-        </Card>
-      ))}
+      {approvers.length === 0 ? (
+        <Spinner animation='border' variant='primary' role='status' />
+      ) : (
+        approvers.map(({ name, email, url }, i) => (
+          <Card style={cardStyles} key={email}>
+            <Card.Body style={cardBodyStyles}>
+              <ProfilePhoto src={url} alt={email} />
+              <Card.Title>{name}</Card.Title>
+              <Card.Text>{email}</Card.Text>
+              <Button onClick={() => onClick(i)} variant='primary'>
+                Select
+              </Button>
+            </Card.Body>
+          </Card>
+        ))
+      )}
     </ListContainer>
   );
 };
 
 export default inject(({ appStore }) => ({
   search: appStore.search,
-  approvers: appStore.approvers,
-  addApprover: appStore.addApprover,
-  setApprover: appStore.setApprover
+  setApprover: appStore.setApprover,
+  setRoute: appStore.setRoute
 }))(observer(List));

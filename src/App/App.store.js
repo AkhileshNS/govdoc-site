@@ -12,7 +12,6 @@ class appStore {
     locality: ""
   }
   approver = null;
-  approvers = [];
 
   setRoute = route => this.currRoute = route;
   setUser = user => this.user = clone(user);
@@ -27,7 +26,6 @@ class appStore {
     }
   }
   setApprover = approver => this.approver = clone(approver);
-  addApprover = approver => this.approver.push(clone(approver));
 }
 
 decorate(appStore, {
@@ -35,13 +33,11 @@ decorate(appStore, {
   user: observable,
   search: observable,
   approver: observable,
-  approvers: observable,
 
   setRoute: action,
   setUser: action,
   setSearch: action,
-  setApprover: action,
-  addApprover: action
+  setApprover: action
 });
 
 export default new appStore();

@@ -2,7 +2,7 @@ import { decorate, observable, action } from "mobx";
 import clone from 'lodash/cloneDeep';
 
 class appStore {
-  currRoute = "pending";
+  currRoute = "dashboard";
   user = null;
 
   // User
@@ -12,24 +12,13 @@ class appStore {
     locality: ""
   }
   approver = null;
+
+  // Common
   pending = [{
-    approver: {
-      name: "Akhilesh NS",
-      email: "nsakhilesh02@gmail.com"
-    },
-    status: "Pending Approval"
-  },{
-    approver: {
-      name: "Akhilesh NS",
-      email: "nsakhilesh02@gmail.com"
-    },
-    status: "Pending Approval"
-  },{
-    approver: {
-      name: "Akhilesh NS",
-      email: "nsakhilesh02@gmail.com"
-    },
-    status: "Pending Approval"
+    name: "Akhilesh NS",
+    email: "nsakhilesh02@gmail.com",
+    mobile: "9611129344",
+    url: "https://firebasestorage.googleapis.com/v0/b/shoppinglistplusplus-nsa.appspot.com/o/govdoc%2FLab%20record%20(4).pdf?alt=media&token=7d32e991-dbe8-4dd0-9e2b-61ee659dae99"
   }];
 
   setRoute = route => this.currRoute = route;
@@ -45,6 +34,8 @@ class appStore {
     }
   }
   setApprover = approver => this.approver = clone(approver);
+  
+  // Common
   addPending = document => this.pending.push(clone(document));
   removePending = i => this.pending.splice(i, 1);
 }

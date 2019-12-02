@@ -10,6 +10,7 @@ import Login from 'Login/Login';
 import List from 'List/List';
 import Submit from 'Submit/Submit';
 import Pending from 'Pending/Pending';
+import Dashboard from 'Dashboard/Dashboard';
 
 const AppContainer = styled.div`
   width: 100vw;
@@ -43,6 +44,10 @@ const App = ({currRoute}) => {
           {
             name: /^Pending$/i,
             component: Pending
+          },
+          {
+            name: /^Dashboard$/i,
+            component: Dashboard
           }
         ]}
       />

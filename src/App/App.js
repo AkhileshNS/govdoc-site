@@ -7,6 +7,7 @@ import Controller from 'App/App.controller';
 import Appbar from 'App/components/Appbar';
 import Search from 'Search/Search';
 import Login from 'Login/Login';
+import List from 'List/List';
 
 const AppContainer = styled.div`
   width: 100vw;
@@ -30,6 +31,9 @@ const App = ({currRoute}) => {
           },{
             name: /^Search$/i,
             component: Search
+          },{
+            name: /^List$/i,
+            component: List
           }
         ]}
       />

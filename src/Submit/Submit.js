@@ -45,7 +45,7 @@ const Submit = ({ setRoute }) => {
 
   const onClick = () => {
     // Insert Firebase Command Here
-    setRoute("search");
+    setRoute("pending");
   };
 
   return (

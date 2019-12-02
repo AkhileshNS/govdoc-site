@@ -2,7 +2,7 @@ import { decorate, observable, action } from "mobx";
 import clone from 'lodash/cloneDeep';
 
 class appStore {
-  currRoute = "submit";
+  currRoute = "pending";
   user = null;
 
   // User
@@ -12,6 +12,25 @@ class appStore {
     locality: ""
   }
   approver = null;
+  pending = [{
+    approver: {
+      name: "Akhilesh NS",
+      email: "nsakhilesh02@gmail.com"
+    },
+    status: "Pending Approval"
+  },{
+    approver: {
+      name: "Akhilesh NS",
+      email: "nsakhilesh02@gmail.com"
+    },
+    status: "Pending Approval"
+  },{
+    approver: {
+      name: "Akhilesh NS",
+      email: "nsakhilesh02@gmail.com"
+    },
+    status: "Pending Approval"
+  }];
 
   setRoute = route => this.currRoute = route;
   setUser = user => this.user = clone(user);
@@ -26,6 +45,8 @@ class appStore {
     }
   }
   setApprover = approver => this.approver = clone(approver);
+  addPending = document => this.pending.push(clone(document));
+  removePending = i => this.pending.splice(i, 1);
 }
 
 decorate(appStore, {
